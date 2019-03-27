@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+}
+/*Tired to position <form> to the right of window, but only would stay for half a second then disappear. Tried using event.preventDefault(), but then all buttons would disappear. */
+form {
+      position: absolute;
+      right: 30px;
+
+}
