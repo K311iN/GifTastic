@@ -9,27 +9,32 @@ $(document).ready(function () {
     function createButtons(array) {
 
         for (var i = 0; i < array.length; i++) {
-            var button = $("<button>")
+            var button = $("<button>");
 
-            button.addClass("search-button")
+            button.addClass("search-button");
 
-            button.attr("data-type", array[i])
+            button.attr("data-type", array[i]);
 
-            button.text(array[i])
+            button.text(array[i]);
 
             $("#musical").append(button);
         }
 
     }
-    createButtons(music)
+    createButtons(music);
 
 
     $(document).on("click", ".search-button", function () {
+
         $("#musical3").empty();
+
         $(".search-button").removeClass("active");
+
         $(this).addClass("active");
+
         var instrument = $(this).attr("data-type");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + instrument + "&api_key=mFhbb5ZsfGwrA6r1y5Y20Hmi65cz0enZ";
+
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -60,7 +65,7 @@ $(document).ready(function () {
 
     });
 
-    
+
     $(document).on("click", ".searchImage", function () {
 
         var state = $(this).attr("data-state");
