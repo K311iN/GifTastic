@@ -18,9 +18,9 @@ $(document).ready(function () {
             button.text(array[i]);
 
             $("#musical").append(button);
-        }
+        };
 
-    }
+    };
     createButtons(music);
 
 
@@ -77,7 +77,7 @@ $(document).ready(function () {
         else {
             $(this).attr("src", $(this).attr("data-still"));
             $(this).attr("data-state", "still");
-        }
+        };
     });
 
 
