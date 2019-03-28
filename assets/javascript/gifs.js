@@ -6,38 +6,74 @@ $(document).ready(function () {
         "guitar", "drums", "bass", "trumpet", "violin", "cello", "clarinet", "saxaphone", "piano", "flute", "banjo", "viola", "bongos", "xylophone", "piccolo", "accordion", "frenchhorn", "bassoon", "didgeridoo", "harmonica"
     ];
     //Loop through each item of the array.
-    for (var i = 0; i < music.length; i++) {
-       
-        // Input area is only visible when refreshing window and last for half a sec. then disappears.
-        // Create buttons for each array item. Really wanted this to be placed in <div id="musical>". Not sure how without missing it up/ append maybe?
-        document.write("<div>");
-        document.write("<input type='button' value='" + music[i] + "'/>");
-        document.write("</div>");
-    
-    };
-    // Each instrument must have it own button when pressed the giphy API (.on("click")) brings 10 images of the buttons value 
+    function createButtons(array) {
 
-    //Event listener for all button elements??
-    $("button").on("click", function () {
-        // onclick=("geValue();")?
-        
+        for (var i = 0; i < array.length; i++) {
+            var button = $("<button>")
 
-        var URLquery = "https://api.giphy.com/v1/gifs/random?q=";
-        var person = "&api_key=mFhbb5ZsfGwrA6r1y5Y20Hmi65cz0enZ&limit=10";
+            button.addClass("search-button")
 
+            button.attr("data-type", array[i])
+
+            button.text(array[i])
+
+            $("#musical").append(button);
+        }
+
+    }
+    createButtons(music)
+
+
+    $(document).on("click", ".search-button", function () {
+        $("#musical3").empty();
+        $(".search-button").removeClass("active");
+        $(this).addClass("active");
+        var instrument = $(this).attr("data-type");
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + instrument + "&api_key=mFhbb5ZsfGwrA6r1y5Y20Hmi65cz0enZ";
         $.ajax({
-            url: URLquery + person,
+            url: queryURL,
             method: "GET"
         })
             .then(function (response) {
+
                 console.log(response);
+                for (var i = 0; i < response.data.length; i++) {
+
+                    var searchDiv = $("<div class='searchItem'>");
+                    var rating = response.data[i].rating;
+                    var p = $("<p>").text("rating:" + rating);
+                    var animated = response.data[i].images.fixed_height_small.url;
+                    var still = response.data[i].images.fixed_height_small_still.url;
+
+                    var image = $("<img>");
+                    image.attr("src", still);
+                    image.attr("data-still", still);
+                    image.attr("data-animate", animated);
+                    image.attr("data-state", "still");
+                    image.addClass("search-image");
+                    searchDiv.append(p, image);
+                    $("#musical3").append(searchDiv);
+
+                };
+
             });
 
     });
 
+    
+    $(document).on("click", ".searchImage", function () {
+
+        var state = $(this).attr("data-state");
+
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+        }
+        else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+        }
+    });
 
 
 });
-
-
-
