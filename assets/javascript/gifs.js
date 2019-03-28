@@ -66,7 +66,7 @@ $(document).ready(function () {
     });
 
 
-    $(document).on("click", ".searchImage", function () {
+    $(document).on("click", ".search-image", function () {
 
         var state = $(this).attr("data-state");
 
